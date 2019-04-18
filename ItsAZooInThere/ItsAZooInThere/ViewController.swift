@@ -54,14 +54,17 @@ class ViewController: UIViewController {
             button.layer.cornerRadius = 2
             button.clipsToBounds = true
             button.tag = i - 1
+            // referred to https://stackoverflow.com/questions/41049212/how-to-create-an-ibaction-for-a-button-programmatically-created-based-on-user-in
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             scrollView.addSubview(button)
         }
         
     }
 
+    // referred to Professor Troy's slides
     @objc func buttonTapped(_ sender: UIButton) {
         print("UIButton \(sender.tag) was clicked.")
+        // referred to https://learnappmaking.com/uialertcontroller-alerts-swift-how-to/
         let alert = UIAlertController(title: "You clicked an animal!", message: "\(animals[sender.tag].name) is a \(animals[sender.tag].age) year old \(animals[sender.tag].species).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cool!", style: .default, handler: nil))
         print(animals[sender.tag].soundPath)
@@ -80,7 +83,8 @@ class ViewController: UIViewController {
 
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // do nothing for the time being
+        // used stackoverflow to help with modular arithmatic in swift
+        // https://stackoverflow.com/questions/40495301/what-does-is-unavailable-use-truncatingremainder-instead-mean
         let theAnimal: Int = Int((scrollView.contentOffset.x + 187) / 375)
         let percentTransition = 2 * abs((scrollView.contentOffset.x.truncatingRemainder(dividingBy: 375.0) / 375.0) - 0.5)
         animalLabel.text = "\(animals[theAnimal].species)"
